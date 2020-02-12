@@ -7,8 +7,6 @@ defmodule Singed do
   def add_request_by_method(server, method) do
     current_methods = Limiter.get(server, :methods)
 
-    # First - is this the first time doing a request?
-
     case current_methods[method] do
       %{rp10s: rp10s, rp10m: rp10m} ->
         Limiter.put(server, :methods, Map.put(current_methods, method, %{rp10s: rp10s + 1, rp10m: rp10m + 1}))
